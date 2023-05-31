@@ -20,36 +20,53 @@ const slides = [
 let slideIndex= 0;
 const dotsNumber = slides.length;
 
-const leftArrow = window.document.getElementById("left");
-leftArrow.addEventListener("click", function (e) {
+const PreviousLeft = document.getElementById("left");
+PreviousLeft.addEventListener("click", function (e) {
 	e.preventDefault();
 
 	const previousIndex = slideIndex - 1 < dotsNumber ? slideIndex - 1 : 0;
 	const previousSlide = slides[previousIndex];
-
-	const currentSlideImage = window.document.getElementById("currentSlide");
-	const currentSlideTitle = window.document.getElementById("currentSlideTitle");
+	
+	const currentSlideImage = document.getElementById("currentSlide");
+	const currentSlideTitle = document.getElementById("currentSlideTitle");
 	currentSlideImage.src = "./assets/images/slideshow/" + previousSlide.image;
 	currentSlideTitle.innerHTML = previousSlide.tagLine;
 
-	console.log("click on left arrow", leftArrow);
+	console.log("Previous Image", PreviousLeft);
 
 	slideIndex = previousIndex;
+	initDots();
 })
 
-const rightArrow = window.document.getElementById("right");
-rightArrow.addEventListener("click", function (e) {
+const NextRight = document.getElementById("right");
+NextRight.addEventListener("click", function (e) {
 	e.preventDefault();
 
 	const nextIndex = slideIndex + 1 < dotsNumber ? slideIndex + 1 : 0;
 	const nextSlide = slides[nextIndex];
 
-	const currentSlideImage = window.document.getElementById("currentSlide");
-	const currentSlideTitle = window.document.getElementById("currentSlideTitle");
+	const currentSlideImage = document.getElementById("currentSlide");
+	const currentSlideTitle = document.getElementById("currentSlideTitle");
 	currentSlideImage.src = "./assets/images/slideshow/" + nextSlide.image;
 	currentSlideTitle.innerHTML = nextSlide.tagLine;
 
-	console.log("click on right arrow", rightArrow);
+	console.log("Next Image", NextRight);
 
 	slideIndex = nextIndex;
+	initDots();
 })
+
+function initDots () {
+	const dotsDiv = document.getElementById("dots");
+	let dotsDivHtmlContent = "";
+	for (let i = 0; i < dotsNumber; i++) {
+		let className = "dot";
+		if (i === slideIndex) {
+			className += " dot_selected";
+		}
+		dotsDivHtmlContent += '<div class="' + className + '"></div>';
+	}
+	dotsDiv.innerHTML = dotsDivHtmlContent;
+}
+
+initDots();
